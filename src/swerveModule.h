@@ -1,11 +1,12 @@
 #include <cmath>
 
+
 class SwerveModule {
 private:
     float cTheta, cVelocity;
     float tTheta, tVelocity;
 
-    float normalizeAngle(float angle);
+    static float normalizeAngle(float angle);
     void optimizeTarget();
     float shortestAngleDiff(float a, float b);
 
