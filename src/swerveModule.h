@@ -7,7 +7,7 @@ private:
     float cTheta, cVelocity;
     float tTheta, tSpeed;
 
-    static float normalizeAngle(float angle);
+    void normalizeAngle();
     void optimizeTarget();
     float shortestAngleDiff(float a, float b);
 

@@ -19,15 +19,15 @@ void SwerveModule::setTarget(float angle, float speed)
     tSpeed = speed;
 }
 
-float SwerveModule::normalizeAngle(float angle)
+void SwerveModule::normalizeAngle()
 {
-    float normalizedAngle = fmod(angle + 1, 2);
+    float normalizedAngle = fmod(tTheta + 1, 2);
     if (normalizedAngle <= 0)
     {
         normalizedAngle += 2;
     }
     normalizedAngle -= 1;
-    return normalizedAngle;
+    tTheta = normalizedAngle;
 }
 
 // Calculates the shortest signed angle to the target
