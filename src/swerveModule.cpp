@@ -20,3 +20,10 @@ float SwerveModule::normalizeAngle(float angle) {
 float SwerveModule::shortestAngleDiff(float a, float b) {    
     return std::abs(a - b) < std::abs(b - a) ? a - b : b - a;
 }
+
+void SwerveModule::optimizeTarget() {
+    if (std::abs(tTheta - cTheta) > 0.5) {
+        tVelocity = -tVelocity;
+        tTheta = -tTheta;
+    }
+}
