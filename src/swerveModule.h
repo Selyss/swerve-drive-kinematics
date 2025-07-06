@@ -1,11 +1,11 @@
 #include <cmath>
 #include <algorithm>
 
-
-class SwerveModule {
+class SwerveModule
+{
 private:
     float cTheta, cVelocity;
-    float tTheta, tVelocity;
+    float tTheta, tSpeed;
 
     static float normalizeAngle(float angle);
     void optimizeTarget();
