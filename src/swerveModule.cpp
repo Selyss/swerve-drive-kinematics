@@ -38,7 +38,9 @@ float SwerveModule::shortestAngleDiff(float a, float b)
 
 void SwerveModule::optimizeTarget()
 {
-    if (std::abs(tTheta - cTheta) > 0.5)
+    float diff = shortestAngleDiff(cTheta, tTheta);
+
+    if (std::abs(diff) > 0.5)
     {
         tSpeed = -tSpeed;
         tTheta = -tTheta;
@@ -47,4 +49,6 @@ void SwerveModule::optimizeTarget()
 
 void SwerveModule::update()
 {
+    normalizeAngle();
+    optimizeTarget();
 }
