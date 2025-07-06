@@ -16,3 +16,7 @@ float SwerveModule::normalizeAngle(float angle) {
     normalizedAngle -= 1;
     return normalizedAngle;
 }
+
+float SwerveModule::shortestAngleDiff(float a, float b) {    
+    return std::abs(a - b) < std::abs(b - a) ? a - b : b - a;
+}
