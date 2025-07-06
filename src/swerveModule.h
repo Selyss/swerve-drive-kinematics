@@ -16,6 +16,6 @@ public:
 
     void setTarget(float angle, float speed);
     void update();
-    float getDriveOutput() const;
-    float getSteerOutput() const;
+    float getDriveOutput();
+    float getSteerOutput();
 };
