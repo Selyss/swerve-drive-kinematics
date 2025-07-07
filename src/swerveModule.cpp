@@ -25,22 +25,22 @@ void SwerveModule::setTarget(float angle, float speed)
 void SwerveModule::normalizeAngle()
 {
     // Normalize target angle
-    float normalizedAngle = fmod(tTheta + 1, 2);
-    if (normalizedAngle <= 0)
+    float tNormalizedAngle = fmod(tTheta + 1, 2);
+    if (tNormalizedAngle <= 0)
     {
-        normalizedAngle += 2;
+        tNormalizedAngle += 2;
     }
-    normalizedAngle -= 1;
-    tTheta = normalizedAngle;
+    tNormalizedAngle -= 1;
+    tTheta = tNormalizedAngle;
 
     // Normalize current angle
-    float normalizedAngle = fmod(cTheta + 1, 2);
-    if (normalizedAngle <= 0)
+    float cNormalizedAngle = fmod(cTheta + 1, 2);
+    if (cNormalizedAngle <= 0)
     {
-        normalizedAngle += 2;
+        cNormalizedAngle += 2;
     }
-    normalizedAngle -= 1;
-    cTheta = normalizedAngle;
+    cNormalizedAngle -= 1;
+    cTheta = cNormalizedAngle;
 }
 
 /**

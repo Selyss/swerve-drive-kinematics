@@ -15,4 +15,8 @@ public:
 
     void update();
     void drive(float tvx, float tvy, float tOmega);
+
+    float getX() const;
+    float getY() const;
+    float getTheta() const;
 };

@@ -8,6 +8,21 @@ Robot::Robot(float dim) : dim(dim)
     bottomRightPosition = std::make_pair(-dim / 2, -dim / 2);
 }
 
+float Robot::getX() const
+{
+    return (topLeftPosition.first + topRightPosition.first + bottomLeftPosition.first + bottomRightPosition.first) / 4.0f;
+}
+
+float Robot::getY() const
+{
+    return (topLeftPosition.second + topRightPosition.second + bottomLeftPosition.second + bottomRightPosition.second) / 4.0f;
+}
+
+float Robot::getTheta() const
+{
+    return atan2f((topLeftPosition.second - bottomLeftPosition.second), (topLeftPosition.first - bottomLeftPosition.first));
+}
+
 void Robot::drive(float tvx, float tvy, float tOmega)
 {
     float topLeftSpeed, topRightSpeed, bottomLeftSpeed, bottomRightSpeed;
