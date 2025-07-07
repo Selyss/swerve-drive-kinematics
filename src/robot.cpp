@@ -18,6 +18,10 @@ void Robot::drive(float tvx, float tvy, float tOmega)
     float topLeftTheta, topRightTheta, bottomLeftTheta, bottomRightTheta;
     float maxSpeed;
 
+    vx = tvx;
+    vy = tvy;
+    omega = tOmega;
+
     topLeftSpeed = std::sqrt((tvx - (tOmega * topLeftPosition.second)) * (tvx - (tOmega * topLeftPosition.second)) + (tvy + (tOmega * topLeftPosition.first)) * (tvy + (tOmega * topLeftPosition.first)));
     topLeftTheta = atan2f((tvy + (tOmega * topLeftPosition.first)), (tvx - (tOmega * topLeftPosition.second)));
 
