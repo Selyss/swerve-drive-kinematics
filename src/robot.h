@@ -6,14 +6,14 @@ class Robot
 {
 private:
     float dim;
-    float vx = 0.0f;
-    float vy = 0.0f;
-    float omega = 0.0f;
+    float vx;
+    float vy;
+    float omega;
 
     // position and orientations
-    float x = 0.0f;
-    float y = 0.0f;
-    float theta = 0.0f;
+    float x;
+    float y;
+    float theta;
 
     SwerveModule topRightModule, topLeftModule, bottomRightModule, bottomLeftModule;
     std::pair<float, float> topRightPosition, topLeftPosition, bottomRightPosition, bottomLeftPosition;

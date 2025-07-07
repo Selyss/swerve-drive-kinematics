@@ -1,6 +1,6 @@
 #include "robot.h"
 
-Robot::Robot(float dim) : dim(dim)
+Robot::Robot(float dim) : dim(dim), x(0), y(0), theta(0), vx(0), vy(0), omega(0)
 {
     topLeftPosition = std::make_pair(dim / 2, dim / 2);
     topRightPosition = std::make_pair(-dim / 2, dim / 2);
@@ -8,20 +8,9 @@ Robot::Robot(float dim) : dim(dim)
     bottomRightPosition = std::make_pair(-dim / 2, -dim / 2);
 }
 
-float Robot::getX() const
-{
-    return (topLeftPosition.first + topRightPosition.first + bottomLeftPosition.first + bottomRightPosition.first) / 4.0f;
-}
-
-float Robot::getY() const
-{
-    return (topLeftPosition.second + topRightPosition.second + bottomLeftPosition.second + bottomRightPosition.second) / 4.0f;
-}
-
-float Robot::getTheta() const
-{
-    return atan2f((topLeftPosition.second - bottomLeftPosition.second), (topLeftPosition.first - bottomLeftPosition.first));
-}
+float Robot::getX() const { return x; }
+float Robot::getY() const { return y; }
+float Robot::getTheta() const { return theta; }
 
 void Robot::drive(float tvx, float tvy, float tOmega)
 {
