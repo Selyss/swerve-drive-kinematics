@@ -39,3 +39,10 @@ void Robot::drive(float tvx, float tvy, float tOmega) {
     blModule.setTarget(blTheta, tlSpeed);
     brModule.setTarget(brTheta, tlSpeed);
 }
+
+void Robot::update() {
+    tlModule.update();
+    trModule.update();
+    blModule.update();
+    brModule.update();
+}
