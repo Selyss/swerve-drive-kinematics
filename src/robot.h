@@ -6,7 +6,7 @@ class Robot
 {
 private:
     float dim;
-    int vx, vy, omega;
+    float vx, vy, omega;
     SwerveModule topRightModule, topLeftModule, bottomRightModule, bottomLeftModule;
     std::pair<float, float> topRightPosition, topLeftPosition, bottomRightPosition, bottomLeftPosition;
 
