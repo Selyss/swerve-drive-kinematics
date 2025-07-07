@@ -29,17 +29,17 @@ void Robot::drive(float tvx, float tvy, float tOmega)
     float topLeftTheta, topRightTheta, bottomLeftTheta, bottomRightTheta;
     float maxSpeed;
 
-    topLeftSpeed = std::sqrt((vx - (omega * topLeftPosition.second)) * (vx - (omega * topLeftPosition.second)) + (vy + (omega * topLeftPosition.first)) * (vy + (omega * topLeftPosition.first)));
-    topLeftTheta = atan2f((vy + (omega * topLeftPosition.first)), (vx - (omega * topLeftPosition.second)));
+    topLeftSpeed = std::sqrt((tvx - (tOmega * topLeftPosition.second)) * (tvx - (tOmega * topLeftPosition.second)) + (tvy + (tOmega * topLeftPosition.first)) * (tvy + (tOmega * topLeftPosition.first)));
+    topLeftTheta = atan2f((tvy + (tOmega * topLeftPosition.first)), (tvx - (tOmega * topLeftPosition.second)));
 
-    topRightSpeed = std::sqrt((vx - (omega * topRightPosition.second)) * (vx - (omega * topRightPosition.second)) + (vy + (omega * topRightPosition.first)) * (vy + (omega * topRightPosition.first)));
-    topRightTheta = atan2f((vy + (omega * topRightPosition.first)), (vx - (omega * topRightPosition.second)));
+    topRightSpeed = std::sqrt((tvx - (tOmega * topRightPosition.second)) * (tvx - (tOmega * topRightPosition.second)) + (tvy + (tOmega * topRightPosition.first)) * (tvy + (tOmega * topRightPosition.first)));
+    topRightTheta = atan2f((tvy + (tOmega * topRightPosition.first)), (tvx - (tOmega * topRightPosition.second)));
 
-    bottomLeftSpeed = std::sqrt((vx - (omega * bottomLeftPosition.second)) * (vx - (omega * bottomLeftPosition.second)) + (vy + (omega * bottomLeftPosition.first)) * (vy + (omega * bottomLeftPosition.first)));
-    bottomLeftTheta = atan2f((vy + (omega * bottomLeftPosition.first)), (vx - (omega * bottomLeftPosition.second)));
+    bottomLeftSpeed = std::sqrt((tvx - (tOmega * bottomLeftPosition.second)) * (tvx - (tOmega * bottomLeftPosition.second)) + (tvy + (tOmega * bottomLeftPosition.first)) * (tvy + (tOmega * bottomLeftPosition.first)));
+    bottomLeftTheta = atan2f((tvy + (tOmega * bottomLeftPosition.first)), (tvx - (tOmega * bottomLeftPosition.second)));
 
-    bottomRightSpeed = std::sqrt((vx - (omega * bottomRightPosition.second)) * (vx - (omega * bottomRightPosition.second)) + (vy + (omega * bottomRightPosition.first)) * (vy + (omega * bottomRightPosition.first)));
-    bottomRightTheta = atan2f((vy + (omega * bottomRightPosition.first)), (vx - (omega * bottomRightPosition.second)));
+    bottomRightSpeed = std::sqrt((tvx - (tOmega * bottomRightPosition.second)) * (tvx - (tOmega * bottomRightPosition.second)) + (tvy + (tOmega * bottomRightPosition.first)) * (tvy + (tOmega * bottomRightPosition.first)));
+    bottomRightTheta = atan2f((tvy + (tOmega * bottomRightPosition.first)), (tvx - (tOmega * bottomRightPosition.second)));
 
     maxSpeed = std::max(std::max(topLeftSpeed, topRightSpeed), std::max(bottomLeftSpeed, bottomRightSpeed));
 
