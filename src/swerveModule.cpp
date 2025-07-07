@@ -63,6 +63,7 @@ void SwerveModule::optimizeTarget()
 {
     float diff = shortestAngleDiff(cTheta, tTheta);
 
+    // If the difference is greater than 0.5pi radians, reverse the speed and adjust the angle.
     if (std::abs(diff) > 0.5)
     {
         tSpeed = -tSpeed;
