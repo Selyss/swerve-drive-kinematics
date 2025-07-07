@@ -1,3 +1,4 @@
+#include <cmath>
 #include <vector>
 #include "swerveModule.h"
 
@@ -6,8 +7,8 @@ class Robot
 private:
     float dim;
     int vx, vy, omega;
-    SwerveModule trModule, tlModule, brModule, blModule;
-    std::pair<float, float> trPos, tlPos, brPos, blPos;
+    SwerveModule topRightModule, topLeftModule, bottomRightModule, bottomLeftModule;
+    std::pair<float, float> topRightPosition, topLeftPosition, bottomRightPosition, bottomLeftPosition;
 
 public:
     Robot(float dim);
