@@ -9,10 +9,10 @@ int main()
     robot.drive(1.0f, 0.0f, 0.0f);
     robot.update();
 
-    std::cout << "Position after driving forward: (" 
-              << robot.getX() << ", " 
-              << robot.getY() << ", " 
-              << robot.getTheta() << ")\n";
+    std::cout << "Robot position after driving forward: "
+              << "X: " << robot.getX() << ", "
+              << "Y: " << robot.getY() << ", "
+              << "Theta: " << robot.getTheta() << std::endl;
 
     return 0;
 }
