@@ -19,8 +19,12 @@ void SwerveModule::setTarget(float angle, float speed)
     tSpeed = speed;
 }
 
+/**
+ * @brief Normalize the target angle and current angle to the range [-1, 1].
+ */
 void SwerveModule::normalizeAngle()
 {
+    // Normalize target angle
     float normalizedAngle = fmod(tTheta + 1, 2);
     if (normalizedAngle <= 0)
     {
@@ -29,6 +33,7 @@ void SwerveModule::normalizeAngle()
     normalizedAngle -= 1;
     tTheta = normalizedAngle;
 
+    // Normalize current angle
     float normalizedAngle = fmod(cTheta + 1, 2);
     if (normalizedAngle <= 0)
     {
@@ -38,12 +43,22 @@ void SwerveModule::normalizeAngle()
     tTheta = normalizedAngle;
 }
 
-// Calculates the shortest signed angle to the target
+/**
+ * @brief Calculate the shortest angle difference between two angles.
+ *
+ * @param a First angle in radians.
+ * @param b Second angle in radians.
+ *
+ * @return The shortest angle difference in radians.
+ */
 float SwerveModule::shortestAngleDiff(float a, float b)
 {
     return std::abs(a - b) < std::abs(b - a) ? a - b : b - a;
 }
 
+/**
+ * @brief Optimize the target angle and speed based on the current angle.
+ */
 void SwerveModule::optimizeTarget()
 {
     float diff = shortestAngleDiff(cTheta, tTheta);
@@ -55,6 +70,9 @@ void SwerveModule::optimizeTarget()
     }
 }
 
+/**
+ * @brief Update the SwerveModule state by normalizing angles and optimizing the target.
+ */
 void SwerveModule::update()
 {
     normalizeAngle();
