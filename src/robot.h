@@ -21,7 +21,7 @@ private:
 public:
     Robot(float dim);
 
-    void update();
+    void update(float dt = 1.0f);
     void drive(float tvx, float tvy, float tOmega);
 
     float getX() const;

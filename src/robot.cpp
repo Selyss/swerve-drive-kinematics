@@ -46,8 +46,36 @@ void Robot::drive(float tvx, float tvy, float tOmega)
     bottomRightModule.setTarget(bottomRightTheta, topLeftSpeed);
 }
 
-void Robot::update()
+/**
+ * @brief Update the robot's state by updating each swerve module.
+ *
+ * This function updates the state of each swerve module, which in turn
+ * updates the robot's position and orientation based on the current
+ * velocities and angles of the modules.
+ *
+ * @param dt The time delta for the update (default is 1.0f).
+ */
+void Robot::update(float dt)
 {
+    // avoid recompute
+    float cosTheta = cos(theta);
+    float sinTheta = sin(theta);
+
+    // convert body-frame velocities to world-frame
+    float dx = vx * cosTheta - vy * sinTheta;
+    float dy = vx * sinTheta + vy * cosTheta;
+
+    x += dx * dt;
+    y += dy * dt;
+    theta += omega * dt;
+
+    // keep theta within [-pi, pi]. the pi is not included in the range, we add it at the end.
+    // if something doesnt work its probably because of this section...
+    if (theta > 1.0f)
+        theta -= 2.0f;
+    if (theta < -1.0f)
+        theta += 2.0f;
+
     topLeftModule.update();
     topRightModule.update();
     bottomLeftModule.update();
