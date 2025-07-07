@@ -51,7 +51,7 @@ void SwerveModule::optimizeTarget()
     if (std::abs(diff) > 0.5)
     {
         tSpeed = -tSpeed;
-        tTheta = -tTheta;
+        tTheta = 1 - tTheta;
     }
 }
 
