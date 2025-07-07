@@ -40,7 +40,7 @@ void SwerveModule::normalizeAngle()
         normalizedAngle += 2;
     }
     normalizedAngle -= 1;
-    tTheta = normalizedAngle;
+    cTheta = normalizedAngle;
 }
 
 /**
