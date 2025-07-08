@@ -84,3 +84,45 @@ TEST_CASE("Robot theta wraps correctly", "[robot]")
 
     REQUIRE(robot.getTheta() == Catch::Approx(0.0f));
 }
+
+TEST_CASE("Robot does not move with zero input", "[robot]")
+{
+    Robot robot(1.0f);
+    robot.drive(0.0f, 0.0f, 0.0f);
+    robot.update();
+
+    REQUIRE(robot.getX() == Catch::Approx(0.0f));
+    REQUIRE(robot.getY() == Catch::Approx(0.0f));
+    REQUIRE(robot.getTheta() == Catch::Approx(0.0f));
+}
+
+TEST_CASE("Robot moves in both X and Y without rotation", "[robot]")
+{
+    Robot robot(1.0f);
+    robot.drive(1.0f, 2.0f, 0.0f);
+    robot.update();
+    REQUIRE(robot.getX() == Catch::Approx(1.0f));
+    REQUIRE(robot.getY() == Catch::Approx(2.0f));
+}
+
+TEST_CASE("Robot responds to sequential drive commands", "[robot]")
+{
+    Robot robot(1.0f);
+    robot.drive(1.0f, 0.0f, 0.0f);
+    robot.update();
+    robot.drive(0.0f, 1.0f, 0.0f);
+    robot.update();
+    REQUIRE(robot.getX() == Catch::Approx(1.0f));
+    REQUIRE(robot.getY() == Catch::Approx(1.0f));
+}
+
+TEST_CASE("Robot stops after drive set to zero", "[robot]")
+{
+    Robot robot(1.0f);
+    robot.drive(1.0f, 0.0f, 0.0f);
+    robot.update();
+    robot.drive(0.0f, 0.0f, 0.0f);
+    robot.update();
+    REQUIRE(robot.getX() == Catch::Approx(1.0f));
+    REQUIRE(robot.getY() == Catch::Approx(0.0f));
+}
