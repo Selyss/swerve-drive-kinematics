@@ -13,15 +13,20 @@ int main(int argc, char *argv[])
     float ty = std::stof(argv[2]);
     float tOmega = std::stof(argv[3]);
 
-    Robot robot(1.0f); // 1m square for testing
+    Robot robot(1.0f);
 
-    robot.drive(tx, ty, tOmega);
+    // rotate in place, rotational velocity of 1
+    robot.drive(0.0f, 0.0f, 1.0f);
+
+    // update over dt = 1s
     robot.update();
 
-    std::cout << "Robot position after applying input: "
-              << "X: " << robot.getX() << ", "
-              << "Y: " << robot.getY() << ", "
-              << "Theta: " << robot.getTheta() << std::endl;
+    float tl = robot.getTopLeftModule().getSteerOutput();
+    float tr = robot.getTopRightModule().getSteerOutput();
+    float bl = robot.getBottomLeftModule().getSteerOutput();
+    float br = robot.getBottomRightModule().getSteerOutput();
+
+    std::cout << "TL: " << tl << " TR: " << tr << " BL: " << bl << " BR: " << br << std::endl;
 
     return 0;
 }
