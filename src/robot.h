@@ -27,4 +27,9 @@ public:
     float getX() const;
     float getY() const;
     float getTheta() const;
+
+    const SwerveModule &getTopLeftModule() const { return topLeftModule; }
+    const SwerveModule &getTopRightModule() const { return topRightModule; }
+    const SwerveModule &getBottomLeftModule() const { return bottomLeftModule; }
+    const SwerveModule &getBottomRightModule() const { return bottomRightModule; }
 };

@@ -1,6 +1,7 @@
 #include <catch2/catch_test_macros.hpp>
 #include <catch2/catch_approx.hpp>
 #include "src/robot.h"
+#include <iostream>
 
 TEST_CASE("Robot initial state", "[robot]")
 {
@@ -201,4 +202,45 @@ TEST_CASE("SwerveModule outputs are stable over repeated updates", "[swerve]")
     }
     REQUIRE(module.getSteerOutput() == Catch::Approx(0.3f));
     REQUIRE(module.getDriveOutput() == Catch::Approx(0.7f));
+}
+
+// TEST_CASE("Swerve modules are 90 degrees apart when rotating in place", "[robot][swerve]")
+// {
+//     Robot robot(1.0f);
+//     robot.drive(0.0f, 0.0f, 1.0f);
+//     robot.update();
+
+//     float tl = robot.getTopLeftModule().getSteerOutput();
+//     float tr = robot.getTopRightModule().getSteerOutput();
+//     float bl = robot.getBottomLeftModule().getSteerOutput();
+//     float br = robot.getBottomRightModule().getSteerOutput();
+
+//     std::cout << "TL: " << tl << " TR: " << tr << " BL: " << bl << " BR: " << br << std::endl;
+
+//     // Check that each module is 90 degrees (0.5 in normalized [-1,1] range)
+//     REQUIRE(std::fabs(std::fmod(tl - tr + 2, 2) - 0.5f) < 0.01f);
+//     REQUIRE(std::fabs(std::fmod(tr - br + 2, 2) - 0.5f) < 0.01f);
+//     REQUIRE(std::fabs(std::fmod(br - bl + 2, 2) - 0.5f) < 0.01f);
+//     REQUIRE(std::fabs(std::fmod(bl - tl + 2, 2) - 0.5f) < 0.01f);
+// }
+
+TEST_CASE("Swerve modules have correct angles when rotating in place", "[robot][swerve]")
+{
+    Robot robot(1.0f);
+    robot.drive(0.0f, 0.0f, 1.0f);
+    robot.update();
+
+    float tl = robot.getTopLeftModule().getSteerOutput();
+    float tr = robot.getTopRightModule().getSteerOutput();
+    float bl = robot.getBottomLeftModule().getSteerOutput();
+    float br = robot.getBottomRightModule().getSteerOutput();
+
+    // Print for debugging
+    std::cout << "TL: " << tl << " TR: " << tr << " BL: " << bl << " BR: " << br << std::endl;
+
+    // Check that each module is at the expected normalized angle
+    REQUIRE(tl == Catch::Approx(0.25f));
+    REQUIRE(tr == Catch::Approx(0.75f));
+    REQUIRE(bl == Catch::Approx(-0.25f));
+    REQUIRE(br == Catch::Approx(-0.75f));
 }
