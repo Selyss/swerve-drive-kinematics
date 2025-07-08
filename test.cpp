@@ -126,3 +126,79 @@ TEST_CASE("Robot stops after drive set to zero", "[robot]")
     REQUIRE(robot.getX() == Catch::Approx(1.0f));
     REQUIRE(robot.getY() == Catch::Approx(0.0f));
 }
+
+/*
+SWERVE MODULE TESTS
+*/
+
+TEST_CASE("SwerveModule initializes to zero", "[swerve]")
+{
+    SwerveModule module;
+    REQUIRE(module.getDriveOutput() == Catch::Approx(0.0f));
+    REQUIRE(module.getSteerOutput() == Catch::Approx(0.0f));
+}
+
+TEST_CASE("SwerveModule setTarget sets outputs", "[swerve]")
+{
+    SwerveModule module;
+    module.setTarget(0.5f, 0.8f);
+    REQUIRE(module.getSteerOutput() == Catch::Approx(0.5f));
+    REQUIRE(module.getDriveOutput() == Catch::Approx(0.8f));
+}
+
+TEST_CASE("SwerveModule normalizes angles", "[swerve]")
+{
+    SwerveModule module;
+    module.setTarget(2.5f, 1.0f); // outside [-1, 1]
+    module.update();
+    REQUIRE(module.getSteerOutput() <= 1.0f);
+    REQUIRE(module.getSteerOutput() >= -1.0f);
+}
+
+TEST_CASE("SwerveModule optimizes target for large angle diff", "[swerve]")
+{
+    SwerveModule module;
+    module.setCurrentAngle(0.0f);
+    module.setTarget(1.0f, 1.0f); // 180 degrees away in normalized [-1,1] space
+    module.update();
+    // If optimized, drive should be reversed
+    REQUIRE(module.getDriveOutput() == Catch::Approx(-1.0f));
+}
+
+TEST_CASE("SwerveModule setCurrentAngle affects steer output", "[swerve]")
+{
+    SwerveModule module;
+    module.setCurrentAngle(0.5f);
+    module.setTarget(0.8f, 1.0f);
+    module.update();
+    REQUIRE(module.getSteerOutput() == Catch::Approx(0.8f));
+}
+
+TEST_CASE("SwerveModule handles negative speed", "[swerve]")
+{
+    SwerveModule module;
+    module.setTarget(0.5f, -1.0f);
+    module.update();
+    REQUIRE(module.getDriveOutput() == Catch::Approx(-1.0f));
+}
+
+TEST_CASE("SwerveModule normalizes angle at boundary", "[swerve]")
+{
+    SwerveModule module;
+    module.setTarget(-1.1f, 1.0f);
+    module.update();
+    REQUIRE(module.getSteerOutput() >= -1.0f);
+    REQUIRE(module.getSteerOutput() <= 1.0f);
+}
+
+TEST_CASE("SwerveModule outputs are stable over repeated updates", "[swerve]")
+{
+    SwerveModule module;
+    module.setTarget(0.3f, 0.7f);
+    for (int i = 0; i < 10; ++i)
+    {
+        module.update();
+    }
+    REQUIRE(module.getSteerOutput() == Catch::Approx(0.3f));
+    REQUIRE(module.getDriveOutput() == Catch::Approx(0.7f));
+}

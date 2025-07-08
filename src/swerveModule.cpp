@@ -19,6 +19,11 @@ void SwerveModule::setTarget(float angle, float speed)
     tSpeed = speed;
 }
 
+void SwerveModule::setCurrentAngle(float angle) // FIXME: inconsistent with setTarget
+{
+    cTheta = angle;
+}
+
 /**
  * @brief Normalize the target angle and current angle to the range [-1, 1].
  */

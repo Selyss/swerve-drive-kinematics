@@ -18,4 +18,5 @@ public:
     void update();
     float getDriveOutput() const;
     float getSteerOutput() const;
+    void setCurrentAngle(float angle);
 };
