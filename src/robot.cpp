@@ -56,9 +56,9 @@ void Robot::drive(float tvx, float tvy, float tOmega)
     }
 
     topLeftModule.setTarget(topLeftTheta, topLeftSpeed);
-    topRightModule.setTarget(topRightTheta, topLeftSpeed);
-    bottomLeftModule.setTarget(bottomLeftTheta, topLeftSpeed);
-    bottomRightModule.setTarget(bottomRightTheta, topLeftSpeed);
+    topRightModule.setTarget(topRightTheta, topRightSpeed);
+    bottomLeftModule.setTarget(bottomLeftTheta, bottomLeftSpeed);
+    bottomRightModule.setTarget(bottomRightTheta, bottomRightSpeed);
 }
 
 /**
