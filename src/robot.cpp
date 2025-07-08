@@ -12,6 +12,17 @@ float Robot::getX() const { return x; }
 float Robot::getY() const { return y; }
 float Robot::getTheta() const { return theta; }
 
+/**
+ * @brief Set the target velocities for the robot's swerve modules.
+ *
+ * This function calculates the target speeds and angles for each swerve module
+ * based on the desired translational and rotational velocities. It ensures that
+ * the speeds are normalized if they exceed a maximum speed of 1.0.
+ *
+ * @param tvx The translational velocity in the x direction.
+ * @param tvy The translational velocity in the y direction.
+ * @param tOmega The rotational velocity (angular velocity).
+ */
 void Robot::drive(float tvx, float tvy, float tOmega)
 {
     float topLeftSpeed, topRightSpeed, bottomLeftSpeed, bottomRightSpeed;
