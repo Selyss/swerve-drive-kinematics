@@ -206,8 +206,13 @@ TEST_CASE("SwerveModule outputs are stable over repeated updates", "[swerve]")
 
 TEST_CASE("Swerve modules are 90 degrees apart when rotating in place", "[robot][swerve]")
 {
+    // 1m square
     Robot robot(1.0f);
+
+    // rotate in place, rotational velocity of 1
     robot.drive(0.0f, 0.0f, 1.0f);
+
+    // update over dt = 1s
     robot.update();
 
     float tl = robot.getTopLeftModule().getSteerOutput();
