@@ -82,10 +82,11 @@ void Robot::update(float dt)
 
     x += dx * dt;
     y += dy * dt;
-    theta += omega * dt;
+    // Debug: print integration step
+    // std::cout << "theta: " << theta << ", omega: " << omega << ", dx: " << dx << ", x: " << x << std::endl;
+    theta += omega * dt / M_PI;
 
     // keep theta within [-pi, pi]. the pi is not included in the range, we add it at the end.
-    // if something doesnt work its probably because of this section...
     if (theta > 1.0f)
         theta -= 2.0f;
     if (theta < -1.0f)

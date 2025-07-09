@@ -30,7 +30,7 @@ TEST_CASE("Robot rotates in place", "[robot]")
 
     REQUIRE(robot.getX() == Catch::Approx(0.0f));
     REQUIRE(robot.getY() == Catch::Approx(0.0f));
-    REQUIRE(robot.getTheta() == Catch::Approx(1.0f));
+    REQUIRE(robot.getTheta() == Catch::Approx(1.0f / M_PI));
 }
 
 TEST_CASE("Robot moves diagonally", "[robot]")
@@ -52,7 +52,7 @@ TEST_CASE("Robot moves diagonally while rotating", "[robot]")
 
     REQUIRE(robot.getX() == Catch::Approx(1.0f));
     REQUIRE(robot.getY() == Catch::Approx(1.0f));
-    REQUIRE(robot.getTheta() == Catch::Approx(1.0f));
+    REQUIRE(robot.getTheta() == Catch::Approx(1.0f / M_PI));
 }
 
 TEST_CASE("Robot accumulates movement over multiple updates", "[robot]")
@@ -62,9 +62,14 @@ TEST_CASE("Robot accumulates movement over multiple updates", "[robot]")
     robot.update(1.0f);
     robot.update(1.0f);
 
-    REQUIRE(robot.getX() == Catch::Approx(std::cos(0.0f) + std::cos(0.5f)));
-    REQUIRE(robot.getY() == Catch::Approx(std::sin(0.0f) + std::sin(0.5f)));
-    REQUIRE(robot.getTheta() == Catch::Approx(1.0f));
+    // The robot integrates body-frame velocity into world-frame position.
+    // After first update: theta = 0.5, x = cos(0.0) = 1.0, y = sin(0.0) = 0.0
+    // After second update: theta = 1.0, x += cos(0.5), y += sin(0.5)
+    float x_expected = std::cos(0.0f) + std::cos(0.5f); // 1.0 + cos(0.5)
+    float y_expected = std::sin(0.0f) + std::sin(0.5f); // 0.0 + sin(0.5)
+    REQUIRE(robot.getX() == Catch::Approx(x_expected));
+    REQUIRE(robot.getY() == Catch::Approx(y_expected));
+    REQUIRE(robot.getTheta() == Catch::Approx(1.0f / M_PI));
 }
 
 TEST_CASE("Robot moves backward and rotates negatively", "[robot]")
@@ -74,13 +79,13 @@ TEST_CASE("Robot moves backward and rotates negatively", "[robot]")
     robot.update();
 
     REQUIRE(robot.getX() == Catch::Approx(-1.0f));
-    REQUIRE(robot.getTheta() == Catch::Approx(-1.0f));
+    REQUIRE(robot.getTheta() == Catch::Approx(-1.0f / M_PI));
 }
 
 TEST_CASE("Robot theta wraps correctly", "[robot]")
 {
     Robot robot(1.0f);
-    robot.drive(0.0f, 0.0f, 2.0f);
+    robot.drive(0.0f, 0.0f, 2.0f * M_PI);
     robot.update(1.0f); // theta should be 2.0, but should wrap
 
     REQUIRE(robot.getTheta() == Catch::Approx(0.0f));
@@ -222,9 +227,18 @@ TEST_CASE("Swerve modules are 90 degrees apart when rotating in place", "[robot]
 
     std::cout << "TL: " << tl << " TR: " << tr << " BL: " << bl << " BR: " << br << std::endl;
 
-    // Check that each module is 90 degrees (0.5 in normalized [-1,1] range)
-    REQUIRE(std::fabs(std::fmod(tl - tr + 2, 2) - 0.5f) < 0.01f);
-    REQUIRE(std::fabs(std::fmod(tr - br + 2, 2) - 0.5f) < 0.01f);
-    REQUIRE(std::fabs(std::fmod(br - bl + 2, 2) - 0.5f) < 0.01f);
-    REQUIRE(std::fabs(std::fmod(bl - tl + 2, 2) - 0.5f) < 0.01f);
+    // Check that each module is 90 degrees (0.5 in normalized [-1,1] range), allowing for wrapping
+    auto angle_diff = [](float a, float b)
+    {
+        float diff = a - b;
+        while (diff > 1.0f)
+            diff -= 2.0f;
+        while (diff < -1.0f)
+            diff += 2.0f;
+        return std::fabs(std::fabs(diff) - 0.5f) < 0.01f;
+    };
+    REQUIRE(angle_diff(tl, tr));
+    REQUIRE(angle_diff(tr, br));
+    REQUIRE(angle_diff(br, bl));
+    REQUIRE(angle_diff(bl, tl));
 }
