@@ -63,3 +63,7 @@ CMakeUserPresets.json
 #cmake-build-*
 
 .vscode/
+
+*.txt
+
+!CmakeLists.txt
