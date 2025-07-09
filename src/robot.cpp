@@ -34,16 +34,16 @@ void Robot::drive(float tvx, float tvy, float tOmega)
     omega = tOmega;
 
     topLeftSpeed = std::sqrt((tvx - (tOmega * topLeftPosition.second)) * (tvx - (tOmega * topLeftPosition.second)) + (tvy + (tOmega * topLeftPosition.first)) * (tvy + (tOmega * topLeftPosition.first)));
-    topLeftTheta = atan2f((tvy + (tOmega * topLeftPosition.first)), (tvx - (tOmega * topLeftPosition.second)));
+    topLeftTheta = atan2f((tvy + (tOmega * topLeftPosition.first)), (tvx - (tOmega * topLeftPosition.second))) / M_PI;
 
     topRightSpeed = std::sqrt((tvx - (tOmega * topRightPosition.second)) * (tvx - (tOmega * topRightPosition.second)) + (tvy + (tOmega * topRightPosition.first)) * (tvy + (tOmega * topRightPosition.first)));
-    topRightTheta = atan2f((tvy + (tOmega * topRightPosition.first)), (tvx - (tOmega * topRightPosition.second)));
+    topRightTheta = atan2f((tvy + (tOmega * topRightPosition.first)), (tvx - (tOmega * topRightPosition.second))) / M_PI;
 
     bottomLeftSpeed = std::sqrt((tvx - (tOmega * bottomLeftPosition.second)) * (tvx - (tOmega * bottomLeftPosition.second)) + (tvy + (tOmega * bottomLeftPosition.first)) * (tvy + (tOmega * bottomLeftPosition.first)));
-    bottomLeftTheta = atan2f((tvy + (tOmega * bottomLeftPosition.first)), (tvx - (tOmega * bottomLeftPosition.second)));
+    bottomLeftTheta = atan2f((tvy + (tOmega * bottomLeftPosition.first)), (tvx - (tOmega * bottomLeftPosition.second))) / M_PI;
 
     bottomRightSpeed = std::sqrt((tvx - (tOmega * bottomRightPosition.second)) * (tvx - (tOmega * bottomRightPosition.second)) + (tvy + (tOmega * bottomRightPosition.first)) * (tvy + (tOmega * bottomRightPosition.first)));
-    bottomRightTheta = atan2f((tvy + (tOmega * bottomRightPosition.first)), (tvx - (tOmega * bottomRightPosition.second)));
+    bottomRightTheta = atan2f((tvy + (tOmega * bottomRightPosition.first)), (tvx - (tOmega * bottomRightPosition.second))) / M_PI;
 
     maxSpeed = std::max(std::max(topLeftSpeed, topRightSpeed), std::max(bottomLeftSpeed, bottomRightSpeed));
 
@@ -73,8 +73,8 @@ void Robot::drive(float tvx, float tvy, float tOmega)
 void Robot::update(float dt)
 {
     // avoid recompute
-    float cosTheta = cos(theta);
-    float sinTheta = sin(theta);
+    float cosTheta = cos(theta * M_PI);
+    float sinTheta = sin(theta * M_PI);
 
     // convert body-frame velocities to world-frame
     float dx = vx * cosTheta - vy * sinTheta;

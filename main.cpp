@@ -3,16 +3,7 @@
 
 int main(int argc, char *argv[])
 {
-    if (argc != 4)
-    {
-        std::cerr << "Usage: " << argv[0] << " <tx> <ty> <tOmega>" << std::endl;
-        return 1;
-    }
-
-    float tx = std::stof(argv[1]);
-    float ty = std::stof(argv[2]);
-    float tOmega = std::stof(argv[3]);
-
+    // 1m square
     Robot robot(1.0f);
 
     // rotate in place, rotational velocity of 1
@@ -27,6 +18,4 @@ int main(int argc, char *argv[])
     float br = robot.getBottomRightModule().getSteerOutput();
 
     std::cout << "TL: " << tl << " TR: " << tr << " BL: " << bl << " BR: " << br << std::endl;
-
-    return 0;
 }

@@ -58,7 +58,12 @@ void SwerveModule::normalizeAngle()
  */
 float SwerveModule::shortestAngleDiff(float a, float b)
 {
-    return std::abs(a - b) < std::abs(b - a) ? a - b : b - a;
+    float diff = a - b;
+    while (diff > 1.0f)
+        diff -= 2.0f;
+    while (diff < -1.0f)
+        diff += 2.0f;
+    return diff;
 }
 
 /**
@@ -66,13 +71,21 @@ float SwerveModule::shortestAngleDiff(float a, float b)
  */
 void SwerveModule::optimizeTarget()
 {
-    float diff = shortestAngleDiff(cTheta, tTheta);
+    float diff = shortestAngleDiff(tTheta, cTheta);
 
-    // If the difference is greater than 0.5pi radians, reverse the speed and adjust the angle.
-    if (std::abs(diff) > 0.5)
+    // if the difference is greater than 0.5 (half a rotation), reverse the speed and flip the angle
+    if (std::abs(diff) > 0.5f)
     {
         tSpeed = -tSpeed;
-        tTheta = 1 - tTheta;
+        tTheta = tTheta + 1.0f;
+        // normalize again after flipping
+        float tNormalizedAngle = fmod(tTheta + 1, 2);
+        if (tNormalizedAngle <= 0)
+        {
+            tNormalizedAngle += 2;
+        }
+        tNormalizedAngle -= 1;
+        tTheta = tNormalizedAngle;
     }
 }
 
