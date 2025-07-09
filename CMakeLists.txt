@@ -25,5 +25,11 @@ FetchContent_Declare(
 
 FetchContent_MakeAvailable(Catch2)
 
-add_executable(tests test.cpp src/robot.cpp src/swerveModule.cpp)
+add_executable(tests 
+  tests/robot_tests.cpp 
+  tests/swerveModule_tests.cpp
+  src/robot.cpp
+  src/swerveModule.cpp
+)
+
 target_link_libraries(tests PRIVATE Catch2::Catch2WithMain)
