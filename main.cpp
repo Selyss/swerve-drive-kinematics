@@ -1,21 +1,42 @@
 #include <iostream>
+#include <vector>
+#include <random>
 #include "robot.h"
 
 int main(int argc, char *argv[])
 {
-    // 1m square
-    Robot robot(1.0f);
+    constexpr int num_robots = 10;
+    constexpr int num_iterations = 1000000;
+    constexpr float dt = 0.01f;
 
-    // rotate in place, rotational velocity of 1
-    robot.drive(0.0f, 0.0f, 1.0f);
+    std::vector<Robot> robots;
+    robots.reserve(num_robots);
+    for (int i = 0; i < num_robots; ++i)
+    {
+        robots.emplace_back(1.0f);
+    }
 
-    // update over dt = 1s
-    robot.update();
+    std::mt19937 rng(42);
+    std::uniform_real_distribution<float> dist(-1.0f, 1.0f);
 
-    float tl = robot.getTopLeftModule().getSteerOutput();
-    float tr = robot.getTopRightModule().getSteerOutput();
-    float bl = robot.getBottomLeftModule().getSteerOutput();
-    float br = robot.getBottomRightModule().getSteerOutput();
+    double sum = 0.0;
+    for (int iter = 0; iter < num_iterations; ++iter)
+    {
+        for (int i = 0; i < num_robots; ++i)
+        {
+            float vx = dist(rng);
+            float vy = dist(rng);
+            float omega = dist(rng);
+            robots[i].drive(vx, vy, omega);
+            robots[i].update(dt);
+            // Accumulate some values to prevent optimization
+            sum += robots[i].getTopLeftModule().getSteerOutput();
+            sum += robots[i].getTopRightModule().getSteerOutput();
+            sum += robots[i].getBottomLeftModule().getSteerOutput();
+            sum += robots[i].getBottomRightModule().getSteerOutput();
+        }
+    }
 
-    std::cout << "TL: " << tl << " TR: " << tr << " BL: " << bl << " BR: " << br << std::endl;
+    std::cout << "Profiling sum: " << sum << std::endl;
+    return 0;
 }
