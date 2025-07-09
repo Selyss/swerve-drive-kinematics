@@ -1,7 +1,8 @@
 cmake_minimum_required(VERSION 3.10)
 project(swerve-drive-kinematics)
 
-set(CMAKE_CXX_STANDARD 23 -O2)
+set(CMAKE_CXX_STANDARD 23)
+set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Ofast")
 
 set(SOURCES
     src/robot.cpp
