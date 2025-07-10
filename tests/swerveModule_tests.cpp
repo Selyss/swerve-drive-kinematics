@@ -1,5 +1,6 @@
 #include <catch2/catch_test_macros.hpp>
 #include <catch2/catch_approx.hpp>
+#include <iostream>
 #include "../src/robot.h"
 
 TEST_CASE("SwerveModule initializes to zero", "[swerve]")
@@ -90,7 +91,7 @@ TEST_CASE("Swerve modules are 90 degrees apart when rotating in place", "[robot]
     float bl = robot.getBottomLeftModule().getSteerOutput();
     float br = robot.getBottomRightModule().getSteerOutput();
 
-    // std::cout << "TL: " << tl << " TR: " << tr << " BL: " << bl << " BR: " << br << std::endl;
+    std::cout << "TL: " << tl << " TR: " << tr << " BL: " << bl << " BR: " << br << std::endl;
 
     // Check that each module is 90 degrees (0.5 in normalized [-1,1] range), allowing for wrapping
     auto angle_diff = [](float a, float b)
