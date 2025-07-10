@@ -13,6 +13,28 @@ float Robot::getY() const { return y; }
 float Robot::getTheta() const { return theta; }
 
 /**
+ * @brief Compute the speed and angle for a swerve module based on translational and rotational velocities.
+ *
+ * This function calculates the speed and angle for a swerve module given the
+ * translational velocities (tvx, tvy) and the rotational velocity (tOmega).
+ * It uses the position of the module to compute the effective velocities.
+ *
+ * @param tvx The translational velocity in the x direction.
+ * @param tvy The translational velocity in the y direction.
+ * @param tOmega The rotational velocity (angular velocity).
+ * @param pos The position of the swerve module.
+ * @return A pair containing the speed and angle of the swerve module.
+ */
+static std::pair<float, float> computeModule(float tvx, float tvy, float tOmega, const std::pair<float, float> &pos)
+{
+    float speed = std::sqrt(
+        std::pow(tvx - tOmega * pos.second, 2) +
+        std::pow(tvy + tOmega * pos.first, 2));
+    float theta = atan2f(tvy + tOmega * pos.first, tvx - tOmega * pos.second) / M_PI;
+    return {speed, theta};
+}
+
+/**
  * @brief Set the target velocities for the robot's swerve modules.
  *
  * This function calculates the target speeds and angles for each swerve module
@@ -25,25 +47,16 @@ float Robot::getTheta() const { return theta; }
  */
 void Robot::drive(float tvx, float tvy, float tOmega)
 {
-    float topLeftSpeed, topRightSpeed, bottomLeftSpeed, bottomRightSpeed;
-    float topLeftTheta, topRightTheta, bottomLeftTheta, bottomRightTheta;
     float maxSpeed;
 
     vx = tvx;
     vy = tvy;
     omega = tOmega;
 
-    topLeftSpeed = std::sqrt((tvx - (tOmega * topLeftPosition.second)) * (tvx - (tOmega * topLeftPosition.second)) + (tvy + (tOmega * topLeftPosition.first)) * (tvy + (tOmega * topLeftPosition.first)));
-    topLeftTheta = atan2f((tvy + (tOmega * topLeftPosition.first)), (tvx - (tOmega * topLeftPosition.second))) / M_PI;
-
-    topRightSpeed = std::sqrt((tvx - (tOmega * topRightPosition.second)) * (tvx - (tOmega * topRightPosition.second)) + (tvy + (tOmega * topRightPosition.first)) * (tvy + (tOmega * topRightPosition.first)));
-    topRightTheta = atan2f((tvy + (tOmega * topRightPosition.first)), (tvx - (tOmega * topRightPosition.second))) / M_PI;
-
-    bottomLeftSpeed = std::sqrt((tvx - (tOmega * bottomLeftPosition.second)) * (tvx - (tOmega * bottomLeftPosition.second)) + (tvy + (tOmega * bottomLeftPosition.first)) * (tvy + (tOmega * bottomLeftPosition.first)));
-    bottomLeftTheta = atan2f((tvy + (tOmega * bottomLeftPosition.first)), (tvx - (tOmega * bottomLeftPosition.second))) / M_PI;
-
-    bottomRightSpeed = std::sqrt((tvx - (tOmega * bottomRightPosition.second)) * (tvx - (tOmega * bottomRightPosition.second)) + (tvy + (tOmega * bottomRightPosition.first)) * (tvy + (tOmega * bottomRightPosition.first)));
-    bottomRightTheta = atan2f((tvy + (tOmega * bottomRightPosition.first)), (tvx - (tOmega * bottomRightPosition.second))) / M_PI;
+    auto [topLeftSpeed, topLeftTheta] = computeModule(tvx, tvy, tOmega, topLeftPosition);
+    auto [topRightSpeed, topRightTheta] = computeModule(tvx, tvy, tOmega, topRightPosition);
+    auto [bottomLeftSpeed, bottomLeftTheta] = computeModule(tvx, tvy, tOmega, bottomLeftPosition);
+    auto [bottomRightSpeed, bottomRightTheta] = computeModule(tvx, tvy, tOmega, bottomRightPosition);
 
     maxSpeed = std::max({topLeftSpeed, topRightSpeed, bottomLeftSpeed, bottomRightSpeed});
 
