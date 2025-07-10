@@ -8,8 +8,25 @@ Robot::Robot(float dim) : dim(dim), x(0), y(0), theta(0), vx(0), vy(0), omega(0)
     bottomRightPosition = std::make_pair(-dim / 2, -dim / 2);
 }
 
+/**
+ * @brief Get the current x position of the robot.
+ *
+ * @return The x position of the robot.
+ */
 float Robot::getX() const { return x; }
+
+/**
+ * @brief Get the current y position of the robot.
+ *
+ * @return The y position of the robot.
+ */
 float Robot::getY() const { return y; }
+
+/**
+ * @brief Get the current orientation (theta) of the robot.
+ *
+ * @return The orientation of the robot in radians, normalized to the range [-1, 1].
+ */
 float Robot::getTheta() const { return theta; }
 
 /**
