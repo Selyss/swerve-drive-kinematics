@@ -45,9 +45,9 @@ void Robot::drive(float tvx, float tvy, float tOmega)
     bottomRightSpeed = std::sqrt((tvx - (tOmega * bottomRightPosition.second)) * (tvx - (tOmega * bottomRightPosition.second)) + (tvy + (tOmega * bottomRightPosition.first)) * (tvy + (tOmega * bottomRightPosition.first)));
     bottomRightTheta = atan2f((tvy + (tOmega * bottomRightPosition.first)), (tvx - (tOmega * bottomRightPosition.second))) / M_PI;
 
-    maxSpeed = std::max(std::max(topLeftSpeed, topRightSpeed), std::max(bottomLeftSpeed, bottomRightSpeed));
+    maxSpeed = std::max({topLeftSpeed, topRightSpeed, bottomLeftSpeed, bottomRightSpeed});
 
-    if (maxSpeed > 1.0)
+    if (maxSpeed > 1.0f)
     {
         topLeftSpeed = topLeftSpeed / maxSpeed;
         topRightSpeed = topRightSpeed / maxSpeed;

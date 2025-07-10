@@ -2,16 +2,32 @@
 
 SwerveModule::SwerveModule() : cTheta(0.0), cVelocity(0.0), tTheta(0.0), tSpeed(0.0) {}
 
+/**
+ * @brief Get the drive output for the swerve module.
+ *
+ * @return The target speed (normalized).
+ */
 float SwerveModule::getDriveOutput() const
 {
     return tSpeed;
 }
 
+/**
+ * @brief Get the steering output for the swerve module.
+ *
+ * @return The target angle in radians, normalized to the range [-1, 1].
+ */
 float SwerveModule::getSteerOutput() const
 {
     return tTheta;
 }
 
+/**
+ * @brief Set the target angle and speed for the swerve module.
+ *
+ * @param angle The target angle in radians, normalized to the range [-1, 1].
+ * @param speed The target speed (normalized).
+ */
 void SwerveModule::setTarget(float angle, float speed)
 {
     // validate later lol
@@ -19,6 +35,11 @@ void SwerveModule::setTarget(float angle, float speed)
     tSpeed = speed;
 }
 
+/**
+ * @brief Set the current angle of the swerve module.
+ *
+ * @param angle The current angle in radians, normalized to the range [-1, 1].
+ */
 void SwerveModule::setCurrentAngle(float angle) // FIXME: inconsistent with setTarget
 {
     cTheta = angle;
