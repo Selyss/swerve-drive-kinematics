@@ -2,6 +2,10 @@
 #include <catch2/catch_approx.hpp>
 #include "../src/robot.h"
 
+#ifndef M_PI
+#define M_PI 3.14159265358979323846
+#endif
+
 TEST_CASE("Robot initial state", "[robot]")
 {
     Robot robot(1.0f);

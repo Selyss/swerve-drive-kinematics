@@ -1,5 +1,9 @@
 #include "robot.h"
 
+#ifndef M_PI
+#define M_PI 3.14159265358979323846
+#endif
+
 Robot::Robot(float dim) : dim(dim), x(0), y(0), theta(0), vx(0), vy(0), omega(0)
 {
     topLeftPosition = std::make_pair(dim / 2, dim / 2);
