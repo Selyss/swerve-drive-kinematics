@@ -50,23 +50,14 @@ void SwerveModule::setCurrentAngle(float angle) // FIXME: inconsistent with setT
  */
 void SwerveModule::normalizeAngle()
 {
-    // Normalize target angle
-    float tNormalizedAngle = fmod(tTheta + 1, 2);
-    if (tNormalizedAngle <= 0)
-    {
-        tNormalizedAngle += 2;
-    }
-    tNormalizedAngle -= 1;
-    tTheta = tNormalizedAngle;
+    // Branchless normalization to [-1, 1)
+    tTheta += 1.0f;
+    tTheta -= 2.0f * std::floor(tTheta * 0.5f);
+    tTheta -= 1.0f;
 
-    // Normalize current angle
-    float cNormalizedAngle = fmod(cTheta + 1, 2);
-    if (cNormalizedAngle <= 0)
-    {
-        cNormalizedAngle += 2;
-    }
-    cNormalizedAngle -= 1;
-    cTheta = cNormalizedAngle;
+    cTheta += 1.0f;
+    cTheta -= 2.0f * std::floor(cTheta * 0.5f);
+    cTheta -= 1.0f;
 }
 
 /**
