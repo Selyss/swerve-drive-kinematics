@@ -68,13 +68,11 @@ void SwerveModule::normalizeAngle()
  *
  * @return The shortest angle difference in radians.
  */
-float SwerveModule::shortestAngleDiff(float a, float b)
+inline float SwerveModule::shortestAngleDiff(float a, float b)
 {
     float diff = a - b;
-    while (diff > 1.0f)
-        diff -= 2.0f;
-    while (diff < -1.0f)
-        diff += 2.0f;
+
+    diff -= 2.0f * std::round(diff * 0.5f);
     return diff;
 }
 
