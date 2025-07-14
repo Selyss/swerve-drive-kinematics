@@ -3,7 +3,7 @@
 #include <swerveModule.h>
 
 SwerveModule module;
-Robot robot;
+Robot robot(1.0f);
 
 void setUp(void)
 {
