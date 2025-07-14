@@ -1,6 +1,7 @@
 #include <swerveModule.h>
 #include <robot.h>
 #include <unity.h>
+#include <iostream>
 
 // windows does not like M_PI
 #ifndef M_PI
@@ -202,6 +203,8 @@ void test_modules_are_ninety_deg_apart_when_rotating(void)
     float tr = robot.getTopRightModule().getSteerOutput();
     float bl = robot.getBottomLeftModule().getSteerOutput();
     float br = robot.getBottomRightModule().getSteerOutput();
+
+    std::cout << "TL: " << tl << " TR: " << tr << " BL: " << bl << " BR: " << br << std::endl;
 
     // Check that each module is 90 degrees (0.5 in normalized [-1,1] range), allowing for wrapping
     auto angle_diff = [](float a, float b)
