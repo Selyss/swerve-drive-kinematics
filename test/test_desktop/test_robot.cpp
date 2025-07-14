@@ -9,17 +9,19 @@
 
 Robot robot(1.0f);
 
-void setUp(void) {
+void setUp(void)
+{
     // runs before each test
     robot = Robot(1.0f);
 }
 
-void tearDown(void) {
+void tearDown(void)
+{
     // runs after each test
 }
 
-
-void test_robot_initial_state(void) {
+void test_robot_initial_state(void)
+{
     TEST_ASSERT_EQUAL_FLOAT(0.0f, robot.getX());
     TEST_ASSERT_EQUAL_FLOAT(0.0f, robot.getY());
     TEST_ASSERT_EQUAL_FLOAT(0.0f, robot.getTheta());
@@ -124,9 +126,16 @@ int main(int argc, char **argv)
 {
     UNITY_BEGIN();
     RUN_TEST(test_robot_initial_state);
+    RUN_TEST(test_robot_moves_forward);
+    RUN_TEST(test_robot_rotates_in_place);
+    RUN_TEST(test_robot_moves_diagonally);
+    RUN_TEST(test_robot_moves_and_rotates);
+    RUN_TEST(test_robot_accumulates_movement_over_updates);
+    RUN_TEST(test_robot_moves_backwards_and_rotates_negatively);
+    RUN_TEST(test_theta_wraps_correctly);
+    RUN_TEST(test_robot_sequential_drive_commands);
+    RUN_TEST(test_robot_stops);
     UNITY_END();
-    
-
 
     return 0;
 }
