@@ -1,3 +1,6 @@
+#ifndef SWERVE_MODULE_H
+#define SWERVE_MODULE_H
+
 #include <cmath>
 #include <algorithm>
 
@@ -20,3 +23,5 @@ public:
     float getSteerOutput() const;
     void setCurrentAngle(float angle);
 };
+
+#endif // SWERVE_MODULE_H

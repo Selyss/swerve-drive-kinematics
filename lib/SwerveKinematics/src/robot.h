@@ -1,3 +1,6 @@
+#ifndef ROBOT_H
+#define ROBOT_H
+
 #include <cmath>
 #include <vector>
 #include "swerveModule.h"
@@ -34,3 +37,5 @@ public:
     const SwerveModule &getBottomLeftModule() const { return bottomLeftModule; }
     const SwerveModule &getBottomRightModule() const { return bottomRightModule; }
 };
+
+#endif // ROBOT_H
