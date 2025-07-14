@@ -67,3 +67,7 @@ CMakeUserPresets.json
 *.txt
 
 !CmakeLists.txt
+
+.pio
+.pioenvs
+.piolibdeps

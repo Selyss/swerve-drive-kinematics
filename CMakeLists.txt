@@ -7,7 +7,7 @@ set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -pg -Ofast")
 set(SOURCES
     src/robot.cpp
     src/swerveModule.cpp
-    main.cpp
+    src/main.cpp
 )
 
 include_directories(src)
@@ -26,11 +26,11 @@ FetchContent_Declare(
 
 FetchContent_MakeAvailable(Catch2)
 
-add_executable(tests 
-  tests/robot_tests.cpp 
-  tests/swerveModule_tests.cpp
+add_executable(test 
+  test/robot_tests.cpp 
+  test/swerveModule_tests.cpp
   src/robot.cpp
   src/swerveModule.cpp
 )
 
-target_link_libraries(tests PRIVATE Catch2::Catch2WithMain)
+target_link_libraries(test PRIVATE Catch2::Catch2WithMain)
