@@ -7,9 +7,10 @@
 
 
 ## Profiling
-
 - Compile with `-pg`
 - run `gprof ./build/swerve gmon.out > analysis.txt`
+
+## Tests
 
 ## For future ref (cmake)
 set(CMAKE_CXX_STANDARD 23)
