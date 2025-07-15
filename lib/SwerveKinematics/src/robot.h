@@ -23,7 +23,7 @@ private:
     std::pair<float, float> topRightPosition, topLeftPosition, bottomRightPosition, bottomLeftPosition;
 
 public:
-    Robot(float dim);
+    explicit Robot(float dim);
 
     void update(float dt = 1.0f);
     void drive(float tvx, float tvy, float tOmega);

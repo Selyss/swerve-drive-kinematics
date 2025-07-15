@@ -3,12 +3,14 @@
 ## Usage
 
 
+## Tests
+All tests to be run in the platformio cli.
+`pio test -e native` for kinematics library testing
+
 ## Profiling
 - Compile with `-pg`
 - run `gprof ./build/swerve gmon.out > analysis.txt`
 
-## Tests
-`pio test -e native` for kinematics library testing
 
 ## For future ref (cmake)
 set(CMAKE_CXX_STANDARD 23)
