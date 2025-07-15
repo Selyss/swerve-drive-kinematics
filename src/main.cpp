@@ -1,42 +1,32 @@
-#include <iostream>
-#include <vector>
-#include <random>
-#include "robot.h"
+/**
+ * Blink
+ *
+ * Turns on an LED on for one second,
+ * then off for one second, repeatedly.
+ */
+#include <Arduino.h>
 
-int main(int argc, char *argv[])
+#ifndef LED_BUILTIN
+#define LED_BUILTIN 13
+#endif
+
+void setup()
 {
-    constexpr int num_robots = 10;
-    constexpr int num_iterations = 1000000;
-    constexpr float dt = 0.01f;
+    // initialize LED digital pin as an output.
+    pinMode(LED_BUILTIN, OUTPUT);
+}
 
-    std::vector<Robot> robots;
-    robots.reserve(num_robots);
-    for (int i = 0; i < num_robots; ++i)
-    {
-        robots.emplace_back(1.0f);
-    }
+void loop()
+{
+    // turn the LED on (HIGH is the voltage level)
+    digitalWrite(LED_BUILTIN, HIGH);
 
-    std::mt19937 rng(42);
-    std::uniform_real_distribution<float> dist(-1.0f, 1.0f);
+    // wait for a second
+    delay(1000);
 
-    double sum = 0.0;
-    for (int iter = 0; iter < num_iterations; ++iter)
-    {
-        for (int i = 0; i < num_robots; ++i)
-        {
-            float vx = dist(rng);
-            float vy = dist(rng);
-            float omega = dist(rng);
-            robots[i].drive(vx, vy, omega);
-            robots[i].update(dt);
-            // Accumulate some values to prevent optimization
-            sum += robots[i].getTopLeftModule().getSteerOutput();
-            sum += robots[i].getTopRightModule().getSteerOutput();
-            sum += robots[i].getBottomLeftModule().getSteerOutput();
-            sum += robots[i].getBottomRightModule().getSteerOutput();
-        }
-    }
+    // turn the LED off by making the voltage LOW
+    digitalWrite(LED_BUILTIN, LOW);
 
-    std::cout << "Profiling sum: " << sum << std::endl;
-    return 0;
+    // wait for a second
+    delay(1000);
 }
