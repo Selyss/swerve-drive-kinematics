@@ -1,6 +1,10 @@
 #include "swerveModule.h"
 
-SwerveModule::SwerveModule() : cTheta(0.0), cVelocity(0.0), tTheta(0.0), tSpeed(0.0) {}
+SwerveModule::SwerveModule()
+    : cTheta(0.0), cVelocity(0.0), tTheta(0.0), tSpeed(0.0),
+      steerPID(1.0f, 0.0f, 0.1f),
+      drivePID(0.5f, 0.1f, 0.0f),
+      steerMotorCommand(0.0f), driveMotorCommand(0.0f) {}
 
 /**
  * @brief Get the drive output for the swerve module.
@@ -43,6 +47,16 @@ void SwerveModule::setTarget(float angle, float speed)
 void SwerveModule::setCurrentAngle(float angle) // FIXME: inconsistent with setTarget
 {
     cTheta = angle;
+}
+
+/**
+ * @brief Set the current velocity of the swerve module.
+ *
+ * @param velocity The current velocity (normalized).
+ */
+void SwerveModule::setCurrentVelocity(float velocity)
+{
+    cVelocity = velocity;
 }
 
 /**
@@ -102,8 +116,22 @@ void SwerveModule::optimizeTarget()
 /**
  * @brief Update the SwerveModule state by normalizing angles and optimizing the target.
  */
-void SwerveModule::update()
+void SwerveModule::update(float dt)
 {
     normalizeAngle();
     optimizeTarget();
+
+    float steerError = shortestAngleDiff(tTheta, cTheta);
+    steerMotorCommand = steerPID.calculate(0.0f, -steerError, dt);
+    driveMotorCommand = drivePID.calculate(tSpeed, cVelocity, dt);
+}
+
+float SwerveModule::getSteerMotorCommand() const
+{
+    return steerMotorCommand;
+}
+
+float SwerveModule::getDriveMotorCommand() const
+{
+    return driveMotorCommand;
 }

@@ -126,8 +126,8 @@ void Robot::update(float dt)
     if (theta < -1.0f)
         theta += 2.0f;
 
-    topLeftModule.update();
-    topRightModule.update();
-    bottomLeftModule.update();
-    bottomRightModule.update();
+    topLeftModule.update(dt);
+    topRightModule.update(dt);
+    bottomLeftModule.update(dt);
+    bottomRightModule.update(dt);
 }
